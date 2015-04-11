@@ -18,8 +18,9 @@ rooms, and the time slots.
 * Other Versions
 
 ## Usage
-```$ git clone https://github.com/HCCB/cerberus.git
-   ```
+```
+$ git clone https://github.com/HCCB/cerberus.git
+```
 
 ## Requirements
 * see [requirements.txt](https://github.com/HCCB/cerberus/requirements.txt)
