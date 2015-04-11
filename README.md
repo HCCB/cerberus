@@ -19,7 +19,9 @@ rooms, and the time slots.
 
 ## Usage
 ```$ git clone https://github.com/HCCB/cerberus.git
-...```
+```
+## Requirements
+* see [requirements.txt](https://github.com/HCCB/cerberus/requirements.txt)
 
 ## Contributors
 
