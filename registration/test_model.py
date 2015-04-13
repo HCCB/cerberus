@@ -13,4 +13,6 @@ class StudentTestCase(TestCase):
     def test_students(self):
         fullname = Student.objects.first().fullname
         self.assertEqual(fullname, "dela Cruz, Juan F.")
+        fullname = Student.objects.last().fullname
+        self.assertEqual(fullname, "Santiago, Pablo")
 
