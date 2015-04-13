@@ -49,14 +49,9 @@ coverage.xml
 
 # Django stuff:
 *.log
-<<<<<<< HEAD
 local_settings.py
 db.sqlite3
-*/migrations/*
-=======
-*/local_settings.py
-db.sqlite3
->>>>>>> collabdev
+# */migrations/*
 
 # Sphinx documentation
 docs/_build/
