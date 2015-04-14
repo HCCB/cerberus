@@ -3,6 +3,7 @@ from models import Student, Address, Phone
 
 
 class StudentTestCase(TestCase):
+
     def setUp(self):
         Student.objects.create(first_name='Juan',
                                middle_name='Felipe',
@@ -11,17 +12,23 @@ class StudentTestCase(TestCase):
                                middle_name='',
                                last_name='Santiago')
 
-        phone = Phone(phone='9328896676',
-                      kind='Home',
-                      owner=Student.objects.first())
+        self.student = Student.objects.first()
 
-        student = Student.objects.first()
+        self.phone = Phone(phone='9328896676', kind='Home', owner=self.student)
 
-        address = Address(owner=student)
+        self.address = Address(owner=self.student)
 
-        print student
-        print phone
-        print address
+    def tearDown(self):
+        pass
+
+    def test_string_repr(self):
+        fullname = self.student.fullname
+        print self.student
+        phone_str = self.phone.__str__()
+        print phone_str
+        self.assertEqual(phone_str, "<Phone:{}-Home>".format(fullname))
+        address_str = self.address.__str__()
+        self.assertEqual(address_str, "<Address:{}-Home>".format(fullname))
 
     def test_students(self):
         fullname = Student.objects.get(last_name='dela Cruz').fullname
