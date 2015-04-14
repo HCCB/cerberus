@@ -28,6 +28,7 @@ class StudentTestCase(TestCase):
         print phone_str
         self.assertEqual(phone_str, "<Phone:{}-Home>".format(fullname))
         address_str = self.address.__str__()
+        print address_str
         self.assertEqual(address_str, "<Address:{}-Home>".format(fullname))
 
     def test_students(self):
