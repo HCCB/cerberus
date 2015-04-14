@@ -1,5 +1,12 @@
+"""
+unittest for models.py
+
+test the create of objects and check the different functions.
+make sure to do a proper test of each method and verify that the outputs are
+correct.
+"""
 from django.test import TestCase
-from models import Student, Address, Phone
+from registration.models import Student, Address, Phone
 
 
 class StudentTestCase(TestCase):
