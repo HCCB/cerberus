@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '3z9w&7iflup0$6@tj_ng#wh)2p_e%m$sa75!w4f%b^8mvdad=e'
+SECRET_KEY = 'override in local_settings.py'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -109,6 +109,6 @@ try:
     LOCAL_SETTINGS
 except NameError:
     try:
-        from local_settings import *  # W0401 Ignore
+        from local_settings import *  # NOQA W040 1
     except ImportError:
         pass
