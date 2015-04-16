@@ -7,6 +7,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+bin/
 env/
 build/
 develop-eggs/
@@ -46,6 +47,9 @@ coverage.xml
 # Translations
 *.mo
 *.pot
+
+# pycharm workspace folder
+.idea
 
 # Django stuff:
 *.log
