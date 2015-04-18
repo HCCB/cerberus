@@ -80,9 +80,15 @@ class Phone(models.Model):
                                    self.get_kind_display())
 
 
+class Guardian(Person):
+    pass
+
+
 class Student(Person):
     birthdate = models.DateField(default=datetime.date.today)
     birthplace = models.CharField(max_length=100, default='')
 
-    school_level = models.IntegerField(choices=LEVEL_TYPES, default="College")
+    school_level = models.IntegerField(choices=LEVEL_TYPES, default=2)
     year_level = models.IntegerField(default=1)
+
+    guardian = models.ForeignKey(Guardian, null=True, blank=True)
