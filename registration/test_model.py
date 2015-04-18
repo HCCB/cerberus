@@ -5,8 +5,10 @@ test the create of objects and check the different functions.
 make sure to do a proper test of each method and verify that the outputs are
 correct.
 """
+import datetime
+
 from django.test import TestCase
-from registration.models import Student, Address, Phone
+from registration.models import Student, Address, Phone, LEVEL_CHOICES
 
 
 class StudentTestCase(TestCase):
@@ -43,3 +45,21 @@ class StudentTestCase(TestCase):
         self.assertEqual(fullname, "dela Cruz, Juan F.")
         fullname = Student.objects.get(last_name='Santiago').fullname
         self.assertEqual(fullname, "Santiago, Pablo")
+
+    def test_student_defaults(self):
+        obj = Student.objects.first()
+
+        # test some defaults values of the Student object
+        self.assertEqual(obj.birthdate, datetime.date.today())
+
+        self.assertEqual(obj.birthplace, '')
+
+        self.assertEqual(obj.get_school_level_display(), LEVEL_CHOICES[1][1])
+
+        self.assertEqual(obj.year_level, 1)
+
+        self.assertEqual(obj.civil_status, 'Single')
+        self.assertEqual(obj.citizenship, 'Filipino')
+        self.assertEqual(obj.religion, 'Roman Catholic')
+
+        self.assertEqual(obj.get_enrollment_type_display(), 'New')
