@@ -18,12 +18,24 @@ PHONE_TYPES = (
     (5, 'Other'),
 )
 
-LEVEL_TYPES = (
-    (1, "Grade"),
-    (2, "High"),
+LEVEL_CHOICES = (
+    (1, "Grade School"),
+    (2, "High School"),
     (3, "College"),
     (4, "Graduate"),
     (5, "Doctorate"),
+)
+
+GENDER_CHOICES = (
+    ('M', 'Male'),
+    ('F', 'Female'),
+)
+
+ENROLLMENT_TYPES = (
+    (1, 'New'),
+    (2, 'Old'),
+    (3, 'Returnee'),
+    (4, 'Cross-Enrollee'),
 )
 
 
@@ -33,6 +45,8 @@ class Person(models.Model):
     last_name = models.CharField(max_length=30)
     middle_name = models.CharField(max_length=30)
     name_suffix = models.CharField(max_length=10)
+
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
 
     def __unicode__(self):
         return "<{}:{}>".format(type(self).__name__, self.fullname)
@@ -85,10 +99,14 @@ class Guardian(Person):
 
 
 class Student(Person):
+    civil_status = models.CharField(max_length=20, default='Single')
+    citizenship = models.CharField(max_length=30, default='Filipino')
+    religion = models.CharField(max_length=30, default='Roman Catholic')
     birthdate = models.DateField(default=datetime.date.today)
     birthplace = models.CharField(max_length=100, default='')
 
-    school_level = models.IntegerField(choices=LEVEL_TYPES, default=2)
+    enrollment_type = models.IntegerField(choices=ENROLLMENT_TYPES, default=1)
+    school_level = models.IntegerField(choices=LEVEL_CHOICES, default=2)
     year_level = models.IntegerField(default=1)
 
     guardian = models.ForeignKey(Guardian, null=True, blank=True)

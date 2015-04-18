@@ -8,7 +8,7 @@ correct.
 import datetime
 
 from django.test import TestCase
-from registration.models import Student, Address, Phone, LEVEL_TYPES
+from registration.models import Student, Address, Phone, LEVEL_CHOICES
 
 
 class StudentTestCase(TestCase):
@@ -49,11 +49,17 @@ class StudentTestCase(TestCase):
     def test_student_defaults(self):
         obj = Student.objects.first()
 
-        # test some defaults
+        # test some defaults values of the Student object
         self.assertEqual(obj.birthdate, datetime.date.today())
 
         self.assertEqual(obj.birthplace, '')
 
-        self.assertEqual(obj.get_school_level_display(), LEVEL_TYPES[1][1])
+        self.assertEqual(obj.get_school_level_display(), LEVEL_CHOICES[1][1])
 
         self.assertEqual(obj.year_level, 1)
+
+        self.assertEqual(obj.civil_status, 'Single')
+        self.assertEqual(obj.citizenship, 'Filipino')
+        self.assertEqual(obj.religion, 'Roman Catholic')
+
+        self.assertEqual(obj.get_enrollment_type_display(), 'New')
