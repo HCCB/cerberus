@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 from compat import py3_compat
@@ -14,6 +16,14 @@ PHONE_TYPES = (
     (3, 'Mobile'),
     (4, 'Fax'),
     (5, 'Other'),
+)
+
+LEVEL_TYPES = (
+    (1, "Grade"),
+    (2, "High"),
+    (3, "College"),
+    (4, "Graduate"),
+    (5, "Doctorate"),
 )
 
 
@@ -41,10 +51,10 @@ class Person(models.Model):
 
 @py3_compat
 class Address(models.Model):
-    street1 = models.CharField(max_length=100, default='')
-    street2 = models.CharField(max_length=100, default='')
-    city = models.CharField(max_length=100, default='Butuan City')
-    province = models.CharField(max_length=100, default='Agusan del Norte')
+    street1 = models.CharField(max_length=60, default='')
+    street2 = models.CharField(max_length=60, default='')
+    city = models.CharField(max_length=60, default='Butuan City')
+    province = models.CharField(max_length=60, default='Agusan del Norte')
     zip = models.CharField(max_length=10, default='8600')
     kind = models.IntegerField(choices=ADDRESS_TYPES, default='Home')
 
@@ -70,5 +80,15 @@ class Phone(models.Model):
                                    self.get_kind_display())
 
 
-class Student(Person):
+class Guardian(Person):
     pass
+
+
+class Student(Person):
+    birthdate = models.DateField(default=datetime.date.today)
+    birthplace = models.CharField(max_length=100, default='')
+
+    school_level = models.IntegerField(choices=LEVEL_TYPES, default=2)
+    year_level = models.IntegerField(default=1)
+
+    guardian = models.ForeignKey(Guardian, null=True, blank=True)

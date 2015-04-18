@@ -2,13 +2,16 @@ Cerberus - HCCB Registration System
 ======
 **Cerberus** is a prototype software system for the school's registration. 
 
-This software aims to automate the registration of the school's registration.
-Its primary goal is to make the registrar's office more efficient by handling
-all the record keeping, and allowing fast searches of the students' records.
+This software aims to automate the school's registration processes.
 
-It will also help in scheduling the resources, such as the instructors, 
+Its primary goal is to make the registrar's office more efficient by handling
+all the routine record keeping, allowing fast searches of the students' 
+records, and generate reports.
+
+It may also help in scheduling the resources, such as the instructors, 
 rooms, and the time slots.
 
+This is a dynamic software will get more features when needed.
 
 #### Screenshot
 ![Screenshot software](http://url/screenshot-software.png "screenshot software")
