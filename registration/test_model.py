@@ -8,10 +8,13 @@ correct.
 import datetime
 
 from django.test import TestCase
-from registration.models import Student, Address, Phone, LEVEL_CHOICES
+from registration.models import Guardian, Student, Address, Phone, LEVEL_CHOICES
 
 
 class StudentTestCase(TestCase):
+
+    PHONE_NUMBER = '9328896677'
+    ADDRESS = 'Hotel ni Pidro'
 
     def setUp(self):
         Student.objects.create(first_name='Juan',
@@ -21,11 +24,22 @@ class StudentTestCase(TestCase):
                                middle_name='',
                                last_name='Santiago')
 
+        self.guardian = Guardian.objects.create(first_name='John',
+                                                middle_name='T',
+                                                last_name='dela Cruz',
+                                                occupation='Teacher')
+
         self.student = Student.objects.first()
 
-        self.phone = Phone(phone='9328896676', kind='Home', owner=self.student)
+        self.student.guardian = self.guardian
 
-        self.address = Address(owner=self.student)
+        self.phone = Phone(phone=self.PHONE_NUMBER, kind=1, owner=self.student)
+        self.phone.save()
+
+        self.address = Address(owner=self.student, street1=self.ADDRESS)
+        self.address.save()
+
+        self.student.save()
 
     def tearDown(self):
         pass
@@ -35,10 +49,14 @@ class StudentTestCase(TestCase):
         print self.student
         phone_str = self.phone.__str__()
         print phone_str
-        self.assertEqual(phone_str, "<Phone:{}-Home>".format(fullname))
+        self.assertEqual(phone_str,
+                         "<Phone:{}-Home:{}>".format(fullname,
+                                                     self.PHONE_NUMBER))
         address_str = self.address.__str__()
         print address_str
-        self.assertEqual(address_str, "<Address:{}-Home>".format(fullname))
+        self.assertEqual(address_str,
+                         "<Address:{}-Home:{}>".format(fullname,
+                                                       self.ADDRESS))
 
     def test_students(self):
         fullname = Student.objects.get(last_name='dela Cruz').fullname
@@ -63,3 +81,30 @@ class StudentTestCase(TestCase):
         self.assertEqual(obj.religion, 'Roman Catholic')
 
         self.assertEqual(obj.get_enrollment_type_display(), 'New')
+
+    def test_student_guardian(self):
+        obj = Student.objects.first()
+        guardian = obj.guardian
+
+        print "Guardian: ", guardian
+
+        self.assertIsNotNone(guardian, 'guadian should not be none, ' +
+                             'it was assigned a value')
+
+    def test_student_address(self):
+        obj = Student.objects.first()
+        address = obj.address_set.first()
+
+        print "Address: ", address
+
+        self.assertIsNotNone(address, 'address should not be none, ' +
+                             'it was assigned a value')
+
+    def test_student_phone(self):
+        obj = Student.objects.first()
+        phone = obj.phone_set.first()
+
+        print "Phone: ", phone
+
+        self.assertIsNotNone(phone, 'phone should not be none, ' +
+                             'it was assigned a value')

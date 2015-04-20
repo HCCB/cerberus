@@ -70,13 +70,13 @@ class Address(models.Model):
     city = models.CharField(max_length=60, default='Butuan City')
     province = models.CharField(max_length=60, default='Agusan del Norte')
     zip = models.CharField(max_length=10, default='8600')
-    kind = models.IntegerField(choices=ADDRESS_TYPES, default='Home')
+    kind = models.IntegerField(choices=ADDRESS_TYPES, default=1)
 
     owner = models.ForeignKey('Person')
 
     def __unicode__(self):
-        return "<{}:{}-{}>".format(type(self).__name__, self.owner.fullname,
-                                   self.get_kind_display())
+        return "<{}:{}-{}:{}>".format(type(self).__name__, self.owner.fullname,
+                                      self.get_kind_display(), self.street1)
 
 
 @py3_compat
@@ -84,18 +84,17 @@ class Phone(models.Model):
     phone = models.CharField(max_length=20)
     kind = models.IntegerField(verbose_name='Type',
                                choices=PHONE_TYPES,
-                               default='Home')
+                               default=1)
 
     owner = models.ForeignKey('Person')
 
     def __unicode__(self):
-        return "<{}:{}-{}>".format(type(self).__name__,
-                                   self.owner.fullname,
-                                   self.get_kind_display())
+        return "<{}:{}-{}:{}>".format(type(self).__name__, self.owner.fullname,
+                                      self.get_kind_display(), self.phone)
 
 
 class Guardian(Person):
-    pass
+    occupation = models.CharField(max_length=30, default='')
 
 
 class Student(Person):
@@ -109,4 +108,15 @@ class Student(Person):
     school_level = models.IntegerField(choices=LEVEL_CHOICES, default=2)
     year_level = models.IntegerField(default=1)
 
-    guardian = models.ForeignKey(Guardian, null=True, blank=True)
+    father = models.ForeignKey(Guardian,
+                               null=True,
+                               blank=True,
+                               related_name='father')
+    mother = models.ForeignKey(Guardian,
+                               null=True,
+                               blank=True,
+                               related_name='mother')
+    guardian = models.ForeignKey(Guardian,
+                                 null=True,
+                                 blank=True,
+                                 related_name='guardian')
