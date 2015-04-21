@@ -38,6 +38,11 @@ ENROLLMENT_TYPES = (
     (4, 'Cross-Enrollee'),
 )
 
+INSTRUCTOR_TYPES = (
+    (1, 'Full-time'),
+    (2, 'Part-time'),
+)
+
 
 @py3_compat
 class Person(models.Model):
@@ -97,6 +102,21 @@ class Guardian(Person):
     occupation = models.CharField(max_length=30, default='')
 
 
+class Instructor(Person):
+    department = models.ForeignKey('Department', related_name='department')
+    kind = models.IntegerField(verbose_name='Type', choices=INSTRUCTOR_TYPES)
+
+
+@py3_compat
+class Department(models.Model):
+    name = models.CharField(max_length=30)
+    head = models.OneToOneField(Instructor,
+                                related_name='dean_or_principal',
+                                limit_choices_to={'department__name': name,
+                                                  'kind': 1,
+                                                  })
+
+
 class Student(Person):
     civil_status = models.CharField(max_length=20, default='Single')
     citizenship = models.CharField(max_length=30, default='Filipino')
@@ -107,6 +127,7 @@ class Student(Person):
     enrollment_type = models.IntegerField(choices=ENROLLMENT_TYPES, default=1)
     school_level = models.IntegerField(choices=LEVEL_CHOICES, default=2)
     year_level = models.IntegerField(default=1)
+    id_number = models.CharField(max_length=20, default='', blank=True)
 
     father = models.ForeignKey(Guardian,
                                null=True,
