@@ -117,6 +117,14 @@ class Department(models.Model):
                                                   })
 
 
+@py3_compat
+class Course(models.Model):
+    title = models.CharField(max_length=30)
+    description = models.CharField(max_length=200)
+    short_name = models.CharField(max_length=10)
+    department = models.ForeignKey(Department)
+
+
 class Student(Person):
     civil_status = models.CharField(max_length=20, default='Single')
     citizenship = models.CharField(max_length=30, default='Filipino')
@@ -128,7 +136,9 @@ class Student(Person):
     school_level = models.IntegerField(choices=LEVEL_CHOICES, default=2)
     year_level = models.IntegerField(default=1)
     id_number = models.CharField(max_length=20, default='', blank=True)
-
+    department = models.ForeignKey(Department)
+    course = models.ForeignKey(Course, limit_choices_to={'department':
+                                                         department, })
     father = models.ForeignKey(Guardian,
                                null=True,
                                blank=True,
