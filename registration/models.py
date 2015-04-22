@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.db.models import F
 
 from compat import py3_compat
 
@@ -41,6 +42,11 @@ ENROLLMENT_TYPES = (
 INSTRUCTOR_TYPES = (
     (1, 'Full-time'),
     (2, 'Part-time'),
+)
+
+YES_NO_CHOICES = (
+    ('Y', 'Yes'),
+    ('N', 'No'),
 )
 
 
@@ -93,13 +99,9 @@ class Phone(models.Model):
 
     owner = models.ForeignKey('Person')
 
-    def __unicode__(self):
+    def __unicode__(self):.
         return "<{}:{}-{}:{}>".format(type(self).__name__, self.owner.fullname,
                                       self.get_kind_display(), self.phone)
-
-
-class Guardian(Person):
-    occupation = models.CharField(max_length=30, default='')
 
 
 class Instructor(Person):
@@ -112,7 +114,7 @@ class Department(models.Model):
     name = models.CharField(max_length=30)
     head = models.OneToOneField(Instructor,
                                 related_name='dean_or_principal',
-                                limit_choices_to={'department__name': name,
+                                limit_choices_to={'department__id': F('id'),
                                                   'kind': 1,
                                                   })
 
@@ -122,7 +124,7 @@ class Course(models.Model):
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=200)
     short_name = models.CharField(max_length=10)
-    department = models.ForeignKey(Department)
+    department = models.ForeignKey('Department')
 
 
 class Student(Person):
@@ -136,18 +138,15 @@ class Student(Person):
     school_level = models.IntegerField(choices=LEVEL_CHOICES, default=2)
     year_level = models.IntegerField(default=1)
     id_number = models.CharField(max_length=20, default='', blank=True)
-    department = models.ForeignKey(Department)
-    course = models.ForeignKey(Course, limit_choices_to={'department':
-                                                         department, })
-    father = models.ForeignKey(Guardian,
+    department = models.ForeignKey('Department', null=True)
+    course = models.ForeignKey('Course',
                                null=True,
-                               blank=True,
-                               related_name='father')
-    mother = models.ForeignKey(Guardian,
-                               null=True,
-                               blank=True,
-                               related_name='mother')
-    guardian = models.ForeignKey(Guardian,
-                                 null=True,
-                                 blank=True,
-                                 related_name='guardian')
+                               limit_choices_to={'department':
+                                                 F('department'), })
+
+
+class Guardian(Person):
+    occupation = models.CharField(max_length=30, default='')
+    relationship = models.CharField(max_length=30, default='Father')
+    emergency_contact = models.CharField(max_length=1, choices=YES_NO_CHOICES)
+    ward = models.ForeignKey('Student', null=True)

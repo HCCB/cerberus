@@ -24,21 +24,20 @@ class StudentTestCase(TestCase):
                                middle_name='',
                                last_name='Santiago')
 
+        self.student = Student.objects.first()
         self.guardian = Guardian.objects.create(first_name='John',
                                                 middle_name='T',
                                                 last_name='dela Cruz',
-                                                occupation='Teacher')
+                                                occupation='Teacher',
+                                                )
+        self.phone = Phone(phone=self.PHONE_NUMBER,
+                           kind=1,
+                           )
+        self.address = Address(street1=self.ADDRESS)
 
-        self.student = Student.objects.first()
-
-        self.student.guardian = self.guardian
-
-        self.phone = Phone(phone=self.PHONE_NUMBER, kind=1, owner=self.student)
-        self.phone.save()
-
-        self.address = Address(owner=self.student, street1=self.ADDRESS)
-        self.address.save()
-
+        self.student.address_set.add(self.address)
+        self.student.phone_set.add(self.phone)
+        self.student.guardian_set.add(self.guardian)
         self.student.save()
 
     def tearDown(self):
@@ -84,11 +83,15 @@ class StudentTestCase(TestCase):
 
     def test_student_guardian(self):
         obj = Student.objects.first()
-        guardian = obj.guardian
 
-        print "Guardian: ", guardian
+        print obj
 
-        self.assertIsNotNone(guardian, 'guadian should not be none, ' +
+        guardians = obj.guardian_set.all()
+
+        for g in guardians:
+            print g
+
+        self.assertIsNotNone(guardians, 'guadians should not be none, ' +
                              'it was assigned a value')
 
     def test_student_address(self):
