@@ -7,15 +7,6 @@ import person
 from compat import py3_compat
 
 
-
-YES_NO_CHOICES = (
-    ('Y', 'Yes'),
-    ('N', 'No'),
-)
-
-
-
-
 class Instructor(person.Person):
     INSTRUCTOR_TYPES = (
         (1, 'Full-time'),
@@ -23,8 +14,6 @@ class Instructor(person.Person):
     )
     department = models.ForeignKey('Department', related_name='department')
     kind = models.IntegerField(verbose_name='Type', choices=INSTRUCTOR_TYPES)
-
-
 
 
 @py3_compat
@@ -102,6 +91,10 @@ class Student(person.Person):
 
 
 class Guardian(person.Person):
+    YES_NO_CHOICES = (
+        ('Y', 'Yes'),
+        ('N', 'No'),
+    )
     occupation = models.CharField(max_length=30, default='')
     relationship = models.CharField(max_length=30, default='Father')
     emergency_contact = models.CharField(max_length=1, choices=YES_NO_CHOICES)
