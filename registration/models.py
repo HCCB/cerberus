@@ -34,16 +34,7 @@ class Department(models.Model):
     head_title = models.CharField(max_length=30, default='Dean')
 
     def __unicode__(self):
-        if self.head:
-            return u"<{}:{}-{} {}>".format(type(self).__name__,
-                                           self.short_name,
-                                           self.head_title,
-                                           self.head.fullname)
-
-        else:
-            return u"<{}:{}>".format(type(self).__name__,
-                                     self.short_name,
-                                     )
+        return u"{}".format( self.short_name,)
 
 
 @py3_compat
@@ -55,7 +46,7 @@ class Program(models.Model):
     department = models.ForeignKey('Department')
 
     def __unicode__(self):
-        return u"<{}: {}>".format(type(self).__name__, self.short_name)
+        return u"{}".format(self.short_name)
 
 
 class Student(person.Person):
@@ -99,3 +90,20 @@ class Guardian(person.Person):
     relationship = models.CharField(max_length=30, default='Father')
     emergency_contact = models.CharField(max_length=1, choices=YES_NO_CHOICES)
     ward = models.ForeignKey('Student', null=True)
+
+
+class Subject(models.Model):
+    short_name = models.CharField(max_length=20, default='')
+    description = models.CharField(max_length=60, default='')
+    units = models.IntegerField(default=3)
+
+@py3_compat
+class Semester(models.Model):
+    name = models.CharField(max_length=30, default='')
+    series = models.IntegerField(default=0)
+
+    class Meta:  # E302
+        ordering = ['series', 'name']
+
+    def __unicode__(self):
+        return u"{}".format(self.name)

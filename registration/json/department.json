@@ -1,0 +1,72 @@
+[
+{
+   "fields": {
+      "head": null,
+      "name": "College of Information and Communications Technology",
+      "short_name": "CICT",
+      "head_title": "Dean"
+   },
+   "model": "registration.department",
+   "pk": 1
+},
+{
+   "fields": {
+      "head": null,
+      "name": "College of Nursing and Health Sciences",
+      "short_name": "CNHS",
+      "head_title": "Dean"
+   },
+   "model": "registration.department",
+   "pk": 2
+},
+{
+   "fields": {
+      "head": null,
+      "name": "College of Criminal Justice Education",
+      "short_name": "CCJE",
+      "head_title": "Dean"
+   },
+   "model": "registration.department",
+   "pk": 3
+},
+{
+   "fields": {
+      "head": null,
+      "name": "College of Education",
+      "short_name": "CoEd",
+      "head_title": "Dean"
+   },
+   "model": "registration.department",
+   "pk": 4
+},
+{
+   "fields": {
+      "head": null,
+      "name": "College of Business Management Education",
+      "short_name": "CBME",
+      "head_title": "Dean"
+   },
+   "model": "registration.department",
+   "pk": 5
+},
+{
+   "fields": {
+      "head": null,
+      "name": "High School",
+      "short_name": "High School",
+      "head_title": "Dean"
+   },
+   "model": "registration.department",
+   "pk": 6
+},
+{
+   "fields": {
+      "head": null,
+      "name": "Grade School",
+      "short_name": "Grade School",
+      "head_title": "Dean"
+   },
+   "model": "registration.department",
+   "pk": 7
+}
+]

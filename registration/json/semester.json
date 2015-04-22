@@ -1,0 +1,26 @@
+[
+{
+   "fields": {
+      "series": 1,
+      "name": "First Semester"
+   },
+   "model": "registration.semester",
+   "pk": 1
+},
+{
+   "fields": {
+      "series": 2,
+      "name": "Second Semester"
+   },
+   "model": "registration.semester",
+   "pk": 2
+},
+{
+   "fields": {
+      "series": 3,
+      "name": "Summer"
+   },
+   "model": "registration.semester",
+   "pk": 3
+}
+]
