@@ -65,7 +65,7 @@ class Person(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
 
     def __unicode__(self):
-        return "<{}:{}>".format(type(self).__name__, self.fullname)
+        return u"<{}:{}>".format(type(self).__name__, self.fullname)
 
     @property
     def fullname(self):
@@ -91,8 +91,8 @@ class Address(models.Model):
     owner = models.ForeignKey('Person')
 
     def __unicode__(self):
-        return "<{}:{}-{}:{}>".format(type(self).__name__, self.owner.fullname,
-                                      self.get_kind_display(), self.street1)
+        return u"<{}:{}-{}:{}>".format(type(self).__name__, self.owner.fullname,
+                                       self.get_kind_display(), self.street1)
 
 
 @py3_compat
@@ -105,8 +105,8 @@ class Phone(models.Model):
     owner = models.ForeignKey('Person')
 
     def __unicode__(self):
-        return "<{}:{}-{}:{}>".format(type(self).__name__, self.owner.fullname,
-                                      self.get_kind_display(), self.phone)
+        return u"<{}:{}-{}:{}>".format(type(self).__name__, self.owner.fullname,
+                                       self.get_kind_display(), self.phone)
 
 
 class Instructor(Person):
@@ -145,8 +145,11 @@ class Program(models.Model):
     title = models.CharField(max_length=60)
     major = models.CharField(max_length=60, blank=True, null=True)
     description = models.CharField(max_length=200, blank=True, null=True)
-    short_name = models.CharField(max_length=10)
+    short_name = models.CharField(max_length=30)
     department = models.ForeignKey('Department')
+
+    def __unicode__(self):
+        return u"<{}: {}>".format(type(self).__name__, self.short_name)
 
 
 class Student(Person):
