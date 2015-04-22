@@ -49,18 +49,23 @@ YES_NO_CHOICES = (
     ('N', 'No'),
 )
 
+TITLE_CHOICES = (
+    (1, 'Dean'),
+    (2, 'Principal'),
+)
+
 
 @py3_compat
 class Person(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    middle_name = models.CharField(max_length=30)
-    name_suffix = models.CharField(max_length=10)
+    middle_name = models.CharField(max_length=30, blank=True, null=True)
+    name_suffix = models.CharField(max_length=10, blank=True, null=True)
 
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
 
     def __unicode__(self):
-        return "<{}:{}>".format(type(self).__name__, self.fullname)
+        return u"<{}:{}>".format(type(self).__name__, self.fullname)
 
     @property
     def fullname(self):
@@ -86,8 +91,8 @@ class Address(models.Model):
     owner = models.ForeignKey('Person')
 
     def __unicode__(self):
-        return "<{}:{}-{}:{}>".format(type(self).__name__, self.owner.fullname,
-                                      self.get_kind_display(), self.street1)
+        return u"<{}:{}-{}:{}>".format(type(self).__name__, self.owner.fullname,
+                                       self.get_kind_display(), self.street1)
 
 
 @py3_compat
@@ -99,9 +104,9 @@ class Phone(models.Model):
 
     owner = models.ForeignKey('Person')
 
-    def __unicode__(self):.
-        return "<{}:{}-{}:{}>".format(type(self).__name__, self.owner.fullname,
-                                      self.get_kind_display(), self.phone)
+    def __unicode__(self):
+        return u"<{}:{}-{}:{}>".format(type(self).__name__, self.owner.fullname,
+                                       self.get_kind_display(), self.phone)
 
 
 class Instructor(Person):
@@ -111,20 +116,40 @@ class Instructor(Person):
 
 @py3_compat
 class Department(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=60, default='')
+    short_name = models.CharField(max_length=30, default='')
     head = models.OneToOneField(Instructor,
+                                null=True,
+                                blank=True,
                                 related_name='dean_or_principal',
                                 limit_choices_to={'department__id': F('id'),
                                                   'kind': 1,
                                                   })
+    head_title = models.CharField(max_length=30, default='Dean')
+
+    def __unicode__(self):
+        if self.head:
+            return u"<{}:{}-{} {}>".format(type(self).__name__,
+                                           self.short_name,
+                                           self.head_title,
+                                           self.head.fullname)
+
+        else:
+            return u"<{}:{}>".format(type(self).__name__,
+                                     self.short_name,
+                                     )
 
 
 @py3_compat
-class Course(models.Model):
-    title = models.CharField(max_length=30)
-    description = models.CharField(max_length=200)
-    short_name = models.CharField(max_length=10)
+class Program(models.Model):
+    title = models.CharField(max_length=60)
+    major = models.CharField(max_length=60, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
+    short_name = models.CharField(max_length=30)
     department = models.ForeignKey('Department')
+
+    def __unicode__(self):
+        return u"<{}: {}>".format(type(self).__name__, self.short_name)
 
 
 class Student(Person):
@@ -139,10 +164,10 @@ class Student(Person):
     year_level = models.IntegerField(default=1)
     id_number = models.CharField(max_length=20, default='', blank=True)
     department = models.ForeignKey('Department', null=True)
-    course = models.ForeignKey('Course',
-                               null=True,
-                               limit_choices_to={'department':
-                                                 F('department'), })
+    program = models.ForeignKey('Program',
+                                null=True,
+                                limit_choices_to={'department':
+                                                  F('department'), })
 
 
 class Guardian(Person):
