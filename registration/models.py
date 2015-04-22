@@ -34,7 +34,7 @@ class Department(models.Model):
     head_title = models.CharField(max_length=30, default='Dean')
 
     def __unicode__(self):
-        return u"{}".format( self.short_name,)
+        return u"{}".format(self.short_name,)
 
 
 @py3_compat
@@ -77,6 +77,7 @@ class Student(person.Person):
     department = models.ForeignKey('Department', null=True)
     program = models.ForeignKey('Program',
                                 null=True,
+                                blank=True,
                                 limit_choices_to={'department':
                                                   F('department'), })
 
@@ -96,6 +97,7 @@ class Subject(models.Model):
     short_name = models.CharField(max_length=20, default='')
     description = models.CharField(max_length=60, default='')
     units = models.IntegerField(default=3)
+
 
 @py3_compat
 class Semester(models.Model):
