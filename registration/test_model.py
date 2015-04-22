@@ -8,7 +8,8 @@ correct.
 import datetime
 
 from django.test import TestCase
-from registration.models import Guardian, Student, Address, Phone, LEVEL_CHOICES
+from registration.models import Guardian, Student
+from person import Address, Phone
 
 
 class StudentTestCase(TestCase):
@@ -71,7 +72,8 @@ class StudentTestCase(TestCase):
 
         self.assertEqual(obj.birthplace, '')
 
-        self.assertEqual(obj.get_school_level_display(), LEVEL_CHOICES[1][1])
+        self.assertEqual(obj.get_school_level_display(),
+                         Student.LEVEL_CHOICES[1][1])
 
         self.assertEqual(obj.year_level, 1)
 
