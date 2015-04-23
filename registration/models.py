@@ -85,12 +85,12 @@ class Student(person.Person):
     year_level = models.IntegerField(default=1)
     id_number = models.CharField(max_length=20, default='', blank=True)
     department = models.ForeignKey('Department', null=True)
-    # can a student take more than one program
-    program = models.ForeignKey('Program',
-                                null=True,
-                                blank=True,
-                                limit_choices_to={'department':
-                                                  F('department'), })
+    # can a student take more than one program?
+    # add a secondary field rather than a many-to-many field
+    program = models.ForeignKey('Program', null=True, blank=True,
+                                limit_choices_to={"department":
+                                                  F('department'), }
+                                )
 
     def clean(self):
         super(Student, self).clean()
