@@ -95,7 +95,7 @@ class Student(person.Person):
     def clean(self):
         super(Student, self).clean()
 
-        if self.school_level < self.HIGH_SCHOOL_LEVEL:
+        if self.school_level < self.COLLEGE_LEVEL:
             self.program = None
         else:
             if self.program is None:
