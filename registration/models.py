@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 from django.db.models import F
+from django.core.exceptions import ValidationError
 
 import person
 from compat import py3_compat
@@ -50,18 +51,27 @@ class Program(models.Model):
 
 
 class Student(person.Person):
+    GRADE_SCHOOL_LEVEL = 1
+    HIGH_SCHOOL_LEVEL = 2
+    COLLEGE_LEVEL = 3
+    GRADUATE_LEVEL = 4
+    DOCTORATE_LEVEL = 5
     LEVEL_CHOICES = (
-        (1, "Grade School"),
-        (2, "High School"),
-        (3, "College"),
-        (4, "Graduate"),
-        (5, "Doctorate"),
+        (GRADE_SCHOOL_LEVEL, "Grade School"),
+        (HIGH_SCHOOL_LEVEL, "High School"),
+        (COLLEGE_LEVEL, "College"),
+        (GRADUATE_LEVEL, "Graduate"),
+        (DOCTORATE_LEVEL, "Doctorate"),
     )
+    NEW_ENROLLMENT = 1
+    OLD_ENROLLMENT = 2
+    RETURNEE_ENROLLMENT = 3
+    CROSS_ENROLLMENT = 4
     ENROLLMENT_TYPES = (
-        (1, 'New'),
-        (2, 'Old'),
-        (3, 'Returnee'),
-        (4, 'Cross-Enrollee'),
+        (NEW_ENROLLMENT, 'New'),
+        (OLD_ENROLLMENT, 'Old'),
+        (RETURNEE_ENROLLMENT, 'Returnee'),
+        (CROSS_ENROLLMENT, 'Cross-Enrollee'),
     )
 
     civil_status = models.CharField(max_length=20, default='Single')
@@ -75,11 +85,23 @@ class Student(person.Person):
     year_level = models.IntegerField(default=1)
     id_number = models.CharField(max_length=20, default='', blank=True)
     department = models.ForeignKey('Department', null=True)
-    program = models.ForeignKey('Program',
-                                null=True,
-                                blank=True,
-                                limit_choices_to={'department':
-                                                  F('department'), })
+    # can a student take more than one program?
+    # add a secondary field rather than a many-to-many field
+    program = models.ForeignKey('Program', null=True, blank=True,
+                                limit_choices_to={"department":
+                                                  F('department'), }
+                                )
+
+    def clean(self):
+        super(Student, self).clean()
+
+        if self.school_level < self.COLLEGE_LEVEL:
+            self.program = None
+        else:
+            if self.program is None:
+                raise ValidationError({'program':
+                                       "Program is required for college " +
+                                       "and higher levels"})
 
 
 class Guardian(person.Person):
