@@ -99,8 +99,9 @@ class Student(person.Person):
             self.program = None
         else:
             if self.program is None:
-                raise ValidationError("Program is required for college " +
-                                      "and higher levels")
+                raise ValidationError({'program':
+                                       "Program is required for college " +
+                                       "and higher levels"})
 
 
 class Guardian(person.Person):
