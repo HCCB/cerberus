@@ -17,7 +17,7 @@ from compat import py3_compat
 
 
 @py3_compat
-class Person(models.Model):    
+class Person(models.Model):
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
@@ -46,10 +46,13 @@ class Person(models.Model):
 
 @py3_compat
 class Address(models.Model):
+    HOME_ADDRESS = 1
+    WORK_ADDRESS = 2
+    PERMANENT_ADDRESS = 3
     ADDRESS_TYPES = (
-        (1, 'Home'),
-        (2, 'Work'),
-        (3, 'Permanent'),
+        (HOME_ADDRESS, 'Home'),
+        (WORK_ADDRESS, 'Work'),
+        (PERMANENT_ADDRESS, 'Permanent'),
     )
     street1 = models.CharField(max_length=60, default='')
     street2 = models.CharField(max_length=60, default='')
@@ -67,12 +70,17 @@ class Address(models.Model):
 
 @py3_compat
 class Phone(models.Model):
+    HOME_PHONE = 1
+    WORK_PHONE = 2
+    MOBILE_PHONE = 3
+    FAX_PHONE = 4
+    OTHER_PHONE = 5
     PHONE_TYPES = (
-        (1, 'Home'),
-        (2, 'Work'),
-        (3, 'Mobile'),
-        (4, 'Fax'),
-        (5, 'Other'),
+        (HOME_PHONE, 'Home'),
+        (WORK_PHONE, 'Work'),
+        (MOBILE_PHONE, 'Mobile'),
+        (FAX_PHONE, 'Fax'),
+        (OTHER_PHONE, 'Other'),
     )
     phone = models.CharField(max_length=20)
     kind = models.IntegerField(verbose_name='Type',
