@@ -23,6 +23,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+bin/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -54,8 +55,8 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
-*/migrations/*
+db.sqlite3*
+# */migrations/*
 */local_settings.py
 
 # Sphinx documentation
@@ -63,3 +64,10 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# pycharm
+.idea/
+
+# spyder
+.spyderproject
+
