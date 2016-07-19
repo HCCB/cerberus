@@ -1,0 +1,17 @@
+{% load render_bundle from webpack_loader %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+        <title>Sample</title>
+    </head>
+    <body>
+        <div id="navbar">
+        </div>
+        <div id="content">
+        </div>
+        {% render_bundle 'main' %}
+    </body>
+</html>

@@ -15,6 +15,9 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+DJANGO_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_NAME = os.path.basename(DJANGO_DIR)
+PROJECT_ROOT = os.path.normpath(os.path.join(DJANGO_DIR, "../../../"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -38,7 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-
+    'webpack_loader',
     'registration',
 )
 
@@ -58,7 +61,9 @@ ROOT_URLCONF = 'cerberus.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,6 +108,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (
+    ('dist', os.path.join(PROJECT_ROOT, 'src', 'assets', 'dist')),  # dist
+)
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'bundles/',  # must end with slash
+        'STATS_FILE': os.path.join(PROJECT_ROOT, 'webpack-stats.json'),
+        'POLL_INTERFAL': 0.1,
+        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    }
+}
+
+if not DEBUG:
+    WEBPACK_LOADER['DEFAULT'].update({
+        'BUNDLE_DIIR_NAME': 'dist/',
+        'STATS_FILE': os.path.join(PROJECT_ROOT, 'webpack-stats-prod.json')
+    })
 
 # Split settings:
 try:
