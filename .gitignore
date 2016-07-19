@@ -58,6 +58,7 @@ local_settings.py
 db.sqlite3*
 # */migrations/*
 */local_settings.py
+webpack-stats*
 
 # Sphinx documentation
 docs/_build/
