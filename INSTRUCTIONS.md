@@ -1,1 +1,3 @@
-Nothing to see here (yet)... move along. move along.
+## Installing NPM dependencies ##
+
+1.  Run `npm -d install`
