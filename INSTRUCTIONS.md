@@ -6,6 +6,12 @@
 sudo apt-get install libtiff4-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-tk
 ```
 
+## Install python development libraries (needed compile some packages, e.g., PIL)
+
+```
+sudo apt-get install python-dev
+```
+
 ## Install python-pip
 
 ```
@@ -77,7 +83,7 @@ _See [virtualenvwrapper Docs][virtualenvwrapper_docs]_ for more details.
   ```
   pip install django-extensions
   pip install pyparsing==1.5.7
-  pip install pydot=1.1.0
+  pip install pydot==1.1.0
   ```
 
 3. Edit project settings.py and add `django-extensions` to the INSTALLED_APPS
