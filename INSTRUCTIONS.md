@@ -57,4 +57,9 @@ _See [virtualenvwrapper Docs][virtualenvwrapper_docs]_ for more details.
 
 ## Install required python packages
 
+```
+  cdproject  # assuming you've set the project directory location like above
+  pip install -r requirements.txt
+```
+
 [virtualenvwrapper_docs]: http://virtualenvwrapper.readthedocs.org/en/latest/
