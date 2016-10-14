@@ -30,16 +30,16 @@ _See [virtualenvwrapper Docs][virtualenvwrapper_docs]_ for more details.
   setvirtualenvproject
   ```
 
-  ## Install NPM v5
+## Install NPM v5
 
-  **NB: you should _not_ run scripts directly off the internet, it is dangerous to say the least**
+**NB: you should _not_ run scripts directly off the internet, it is dangerous to say the least**
 
-  ```
+```
   sudo apt-get purge npm nodejs nodejs-legacy # remove any existing nodejs installs
   wget -qO- https://deb.nodesource.com/setup_5.x | sudo -E bash - # run the bash script from nodesource (see NB above)
   sudo apt-get install nodejs # install nodejs
   sudo npm install -g --upgrade npm # upgrade npm just in case
-  ```
+```
 
 ## Install nodejs dependencies
 
