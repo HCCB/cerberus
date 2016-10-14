@@ -62,4 +62,26 @@ _See [virtualenvwrapper Docs][virtualenvwrapper_docs]_ for more details.
   pip install -r requirements.txt
 ```
 
+## Installing Optional components
+
+### Installing python-pygraphviz for generating ERD diagrams from models
+
+1. Install python-pygraphviz
+
+  ```
+  sudo apt-get install python-pygraphviz
+  ```
+
+2. Install python packages (locally)
+
+  ```
+  pip install django-extensions
+  pip install pyparsing==1.5.7
+  pip install pydot=1.1.0
+  ```
+
+3. Edit project settings.py and add `django-extensions` to the INSTALLED_APPS
+
+  You can now do `./manage.py graph_models registration -o <output image filename>`
+
 [virtualenvwrapper_docs]: http://virtualenvwrapper.readthedocs.org/en/latest/
