@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
 var srcPath = path.resolve('./src/assets/');
 var cssPath = path.resolve('./src/assets/css/');
+var scssPath = path.resolve('./src/assets/sass/');
 
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
@@ -29,7 +30,12 @@ module.exports = {
       { 
         test: /\.css$/, 
         loader: ExtractTextPlugin.extract("style", "css")
-      },  {
+      },  
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract("style", ["css", "sass"])
+      },
+      {
         test: /\.txt$/,
         loader: 'raw-loader',
       }, {
@@ -41,15 +47,19 @@ module.exports = {
       }
     ] // add all common loaders here
   },
+  sassLoader: {
+    includePath: [scssPath]
+  },
 
   resolve: {
     modulesDirectories: [
         'node_modules', 
         'bower_components', 
         srcPath,
-        cssPath
+        cssPath,
+        scssPath,
     ],
-    extensions: ['', '.js', '.jsx', 'css']
+    extensions: ['', '.js', '.jsx', 'css', 'sass', 'scss']
   },
   debug: true
 }
