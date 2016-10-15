@@ -14,8 +14,9 @@ module.exports = {
 
   output: {
       path: path.resolve('./src/assets/bundles/'),
-      filename: "[name]-[hash].js",
-      chunkFilename: "[id].js"
+      filename: "[name].js",
+      // chunkFilename: "[id].js"
+      allChunks: true
   },
 
   plugins: [
