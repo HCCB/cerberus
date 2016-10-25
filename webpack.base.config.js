@@ -15,14 +15,10 @@ module.exports = {
   output: {
       path: path.resolve('./src/assets/bundles/'),
       filename: "[name].js",
-      // chunkFilename: "[id].js"
       allChunks: true
   },
 
   plugins: [
-      // new ExtractTextPlugin("style.css", {
-      //     allChunks: true
-      // })
       new ExtractTextPlugin("[name].css")
   ], // add all common plugins here
 
@@ -30,7 +26,7 @@ module.exports = {
     loaders: [
       { 
         test: /\.css$/, 
-        loader: ExtractTextPlugin.extract("style", "css")
+        loader: ExtractTextPlugin.extract("style", ["css", "autoprefixer"])
       },  
       {
         test: /\.scss$/,
