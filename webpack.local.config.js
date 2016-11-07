@@ -5,11 +5,18 @@ var BundleTracker = require('webpack-bundle-tracker')
 var config = require('./webpack.base.config.js')
 
 // Use webpack dev server
-config.entry = [
-  'webpack-dev-server/client?http://localhost:3000',
-  'webpack/hot/only-dev-server',
-  './src/assets/js/index'
-]
+config.entry = {
+  main:
+    ['webpack-dev-server/client?http://localhost:3000',
+     'webpack/hot/only-dev-server',
+     './src/assets/js/main/index'
+    ],
+  docs:
+    ['webpack-dev-server/client?http://localhost:3000',
+      'webpack/hot/only-dev-server',
+      './src/assets/js/docs/index'
+    ]
+}
 
 // override django's STATIC_URL for webpack bundles
 config.output.publicPath = 'http://localhost:3000/assets/bundles/'
