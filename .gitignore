@@ -60,6 +60,8 @@ db.sqlite3*
 */local_settings.py
 webpack-stats*
 node_modules/*
+*/static/*
+
 # Sphinx documentation
 docs/_build/
 bundles/
