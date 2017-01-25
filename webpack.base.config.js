@@ -13,8 +13,8 @@ module.exports = {
   root: srcPath,
   // entry: "./src/assets/js/index",
   entry: {
-    'main': "./js/main/index",
-    'docs': "./js/docs/index",
+    'main': "./src/assets/js/main/index",
+    'docs': "./src/assets/js/docs/index",
   },
 
   output: {

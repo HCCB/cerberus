@@ -1,0 +1,12 @@
+var React = require('react');
+
+var Section = require('./section');
+
+module.exports = React.createClass({
+    render: function() {
+       return <div>
+		<Section title="title"/>
+              </div>
+    }
+});
+
