@@ -114,8 +114,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, '../static')
 ASSETS_ROOT = os.path.join(PROJECT_ROOT, 'src', 'assets')
 STATICFILES_DIRS = (
-    ('dist', os.path.join(ASSETS_ROOT,'fonts')),  
-    ('dist', os.path.join(ASSETS_ROOT,'images')), 
+    ('fonts', os.path.join(ASSETS_ROOT,'fonts')),  
+    ('images', os.path.join(ASSETS_ROOT,'images')), 
+    ('icons', os.path.join(ASSETS_ROOT,'icons')), 
 )
 
 WEBPACK_LOADER = {
